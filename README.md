@@ -48,11 +48,8 @@ Arquivos relevantes:
 - Enum: `src/main/java/com/comparador/ComparadorTI/events/model/EventType.java`
 
 ## Verificação de criação
-- `Create` endpoints retornam o recurso criado (por exemplo com `id`).
-- Conferir logs da aplicação ou persistência (se implementada).
+- `Create` endpoints retornam o objeto criado.
 - Chame o endpoint de GET correspondente com o `id` retornado para verificar.
 
 ## Erros comuns
-- `400 Bad Request` — JSON inválido ou validação falhou.
-- `404 Not Found` — recurso não encontrado.
-- Para SOAP/WSDL: use `Content-Type: text/xml; charset=utf-8` (SOAP 1.1) ou `application/soap+xml` (SOAP 1.2).
+- Objeto não encontrado, conflito caso o objeto já exista no repositório e bad request para status de enum não existente.
