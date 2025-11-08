@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.projetoti.com/spring/soap/api/userSoap"
+            xmlns:tns="http://www.projetoti.com/spring/soap/api/userSoap"
+            elementFormDefault="qualified">
+
+    <xsd:element name="UserRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="name" type="xsd:string" />
+                <xsd:element name="email" type="xsd:string" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="UserResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="id" type="xsd:int" />
+                <xsd:element name="name" type="xsd:string" />
+                <xsd:element name="email" type="xsd:string" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

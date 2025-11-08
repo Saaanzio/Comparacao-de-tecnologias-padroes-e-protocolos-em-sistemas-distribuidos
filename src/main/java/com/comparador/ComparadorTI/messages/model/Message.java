@@ -1,4 +1,12 @@
 package com.comparador.ComparadorTI.messages.model;
 
-public class Message {
+import java.time.LocalDateTime;
+
+public record Message(
+        int id,
+        String user,
+        String content,
+        LocalDateTime timestamp
+)
+{
 }
