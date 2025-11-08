@@ -43,10 +43,6 @@ Base URL (padrão): `http://localhost:8080`
   - PATCH `/status/{id}`  
     - Atualiza/alternar status do evento.
 
-Arquivos relevantes:
-- Controllers: `src/main/java/com/comparador/ComparadorTI/user/controller/UserController.java`, `src/main/java/com/comparador/ComparadorTI/messages/controller/MessagesController.java`, `src/main/java/com/comparador/ComparadorTI/events/controller/EventController.java`
-- Enum: `src/main/java/com/comparador/ComparadorTI/events/model/EventType.java`
-
 ## Verificação de criação
 - `Create` endpoints retornam o objeto criado.
 - Chame o endpoint de GET correspondente com o `id` retornado para verificar.
