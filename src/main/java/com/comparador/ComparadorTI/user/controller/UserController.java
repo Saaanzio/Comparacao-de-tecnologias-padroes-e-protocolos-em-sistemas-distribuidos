@@ -1,8 +1,10 @@
 package com.comparador.ComparadorTI.user.controller;
 
+import com.comparador.ComparadorTI.user.model.User;
 import com.comparador.ComparadorTI.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
@@ -23,6 +26,8 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<?> postUser(@RequestParam String name, @RequestParam String email) {
-        return ResponseEntity.ok(userService.createUser(name, email));
+        User created = userService.createUser(name, email);
+        messagingTemplate.convertAndSend("/topic/users", created);
+        return ResponseEntity.ok(created);
     }
 }
