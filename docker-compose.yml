@@ -1,4 +1,13 @@
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: java-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
