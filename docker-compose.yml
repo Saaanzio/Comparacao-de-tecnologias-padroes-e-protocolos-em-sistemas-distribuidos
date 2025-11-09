@@ -1,16 +1,58 @@
 services:
-  app:
+  user-service:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: java-app
+      dockerfile: Dockerfile.user
+    container_name: user-service
     ports:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  message-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.messages
+    container_name: message-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    depends_on:
+      user-service:
+        condition: service_healthy
+
+  event-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.events
+    container_name: event-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    depends_on:
+      message-service:
+        condition: service_healthy
+  
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus
+    container_name: prometheus_java
     ports:
       - "9090:9090"
     volumes:
@@ -20,7 +62,7 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
+    container_name: grafana_java
     ports:
       - "3000:3000"
     depends_on:

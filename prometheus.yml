@@ -2,7 +2,17 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: "spring"
+  - job_name: "user-service"
     metrics_path: "/actuator/prometheus"
     static_configs:
-      - targets: ["host.docker.internal:8080"]
+      - targets: ["user-service:8080"]
+    
+  - job_name: "message-service"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["message-service:8081"]
+      
+  - job_name: "event-service"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["event-service:8082"]
