@@ -13,11 +13,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class EventRepositoryImpl implements EventRepository {
     private static Integer ID = 0;
-    private final HashMap<Integer, Event> eventHashMap = new HashMap<>();
+    private final ConcurrentHashMap<Integer, Event> eventHashMap = new ConcurrentHashMap<>();
     @Override
     public Event getEvent(int id) {
         return Optional.ofNullable(eventHashMap.get(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

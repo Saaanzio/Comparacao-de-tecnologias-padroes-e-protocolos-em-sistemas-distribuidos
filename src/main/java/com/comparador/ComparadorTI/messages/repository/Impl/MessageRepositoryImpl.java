@@ -10,11 +10,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class MessageRepositoryImpl implements MessageRepository {
     private static Integer ID = 0;
-    private final HashMap<Integer, Message> messageHashMap = new HashMap<>();
+    private final ConcurrentHashMap<Integer, Message> messageHashMap = new ConcurrentHashMap<>();
     @Override
     public Message getMessage(int id) {
         return Optional.ofNullable(messageHashMap.get(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

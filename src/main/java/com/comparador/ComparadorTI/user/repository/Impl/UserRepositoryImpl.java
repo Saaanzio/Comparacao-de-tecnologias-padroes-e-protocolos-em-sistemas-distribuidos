@@ -10,12 +10,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
     private static Integer ID = 0;
-    private final HashMap<Integer, User> users = new HashMap<>();
+    private final ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
 
     @Override
     public List<User> getAllUsers() {
