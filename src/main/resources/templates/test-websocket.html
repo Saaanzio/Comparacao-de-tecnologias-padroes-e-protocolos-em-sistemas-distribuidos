@@ -7,172 +7,33 @@
   <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #333;
-    }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-
-    .metric {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .metric h3 {
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 10px;
-    }
-
-    .metric-value {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #333;
-    }
-
-    .content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .panel {
-      background: white;
-      padding: 25px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .panel h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .status {
-      display: inline-block;
-      padding: 5px 15px;
-      border-radius: 5px;
-      font-size: 0.9rem;
-      margin-bottom: 15px;
-    }
-
-    .status.connected {
-      background: #d4edda;
-      color: #155724;
-    }
-
-    .status.disconnected {
-      background: #f8d7da;
-      color: #721c24;
-    }
-
-    .input-group {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    input[type="text"], input[type="number"] {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
-
-    button {
-      padding: 10px 20px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    button:hover {
-      background: #0056b3;
-    }
-
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-
-    .stress-controls {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 15px;
-    }
-
-    .stress-controls label {
-      font-size: 0.9rem;
-    }
-
-    .stress-controls input {
-      width: 80px;
-      padding: 5px;
-    }
-
-    #messages {
-      max-height: 400px;
-      overflow-y: auto;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 15px;
-    }
-
-    .message {
-      background: #f8f9fa;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      border-left: 3px solid #007bff;
-    }
-
-    .message-time {
-      font-size: 0.8rem;
-      color: #666;
-      margin-bottom: 5px;
-    }
-
-    .response-time {
-      color: #28a745;
-      font-weight: bold;
-    }
-
-    @media (max-width: 768px) {
-      .content {
-        grid-template-columns: 1fr;
-      }
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; color: #333; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { text-align: center; margin-bottom: 30px; color: #333; }
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+    .metric { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .metric h3 { font-size: 0.9rem; color: #666; margin-bottom: 10px; }
+    .metric-value { font-size: 1.6rem; font-weight: bold; color: #333; }
+    .content { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .panel { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .panel h2 { margin-bottom: 20px; color: #333; }
+    .status { display: inline-block; padding: 5px 15px; border-radius: 5px; font-size: 0.9rem; margin-bottom: 15px; }
+    .status.connected { background: #d4edda; color: #155724; }
+    .status.disconnected { background: #f8d7da; color: #721c24; }
+    .input-group { display: flex; gap: 10px; margin-bottom: 15px; }
+    input[type="text"], input[type="number"] { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; }
+    button { padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; }
+    button.primary { background: #007bff; } button.primary:hover { background: #0056b3; }
+    button.success { background: #28a745; } button.success:hover { background: #1f7a35; }
+    button:disabled { background: #ccc; cursor: not-allowed; }
+    .stress-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; align-items: center; margin-top: 10px; }
+    .stress-controls label { font-size: 0.9rem; display: flex; flex-direction: column; gap: 6px; }
+    #messages { max-height: 460px; overflow-y: auto; border: 1px solid #ddd; border-radius: 5px; padding: 15px; }
+    .message { background: #f8f9fa; padding: 10px; margin-bottom: 10px; border-radius: 5px; border-left: 3px solid #6c757d; }
+    .message-time { font-size: 0.8rem; color: #666; margin-bottom: 5px; }
+    .response-time { color: #28a745; font-weight: bold; }
+    @media (max-width: 768px) { .content { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -180,48 +41,56 @@
   <h1>WebSocket Stress Test</h1>
 
   <div class="metrics">
-    <div class="metric">
-      <h3>Total Messages</h3>
-      <div class="metric-value" id="totalMessages">0</div>
-    </div>
-    <div class="metric">
-      <h3>Average Time</h3>
-      <div class="metric-value" id="avgTime">0ms</div>
-    </div>
-    <div class="metric">
-      <h3>Last Response</h3>
-      <div class="metric-value" id="lastTime">-</div>
-    </div>
-    <div class="metric">
-      <h3>Messages/min</h3>
-      <div class="metric-value" id="messagesPerMin">0</div>
-    </div>
+    <div class="metric"><h3>Total Recebidas</h3><div class="metric-value" id="totalMessages">0</div></div>
+    <div class="metric"><h3>Média (ms)</h3><div class="metric-value" id="avgTime">0.00</div></div>
+    <div class="metric"><h3>Última (ms)</h3><div class="metric-value" id="lastTime">-</div></div>
+    <div class="metric"><h3>Msgs/min</h3><div class="metric-value" id="messagesPerMin">0</div></div>
+    <div class="metric"><h3>Msgs/s</h3><div class="metric-value" id="messagesPerSec">0</div></div>
+    <div class="metric"><h3>Falhas</h3><div class="metric-value" id="failures">0</div></div>
+    <div class="metric"><h3>P95 (ms)</h3><div class="metric-value" id="p95">0.00</div></div>
+    <div class="metric"><h3>P99 (ms)</h3><div class="metric-value" id="p99">0.00</div></div>
   </div>
 
   <div class="content">
     <div class="panel">
-      <h2>Send Message</h2>
+      <h2>Enviar</h2>
       <span class="status disconnected" id="status">Disconnected</span>
 
       <div class="input-group">
-        <input id="message" type="text" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
-        <button onclick="sendMessage()">Send</button>
+        <input id="message" type="text" placeholder="Digite a mensagem..." onkeypress="handleKeyPress(event)">
+        <button class="primary" onclick="sendMessage()">Enviar</button>
       </div>
 
-      <button onclick="clearMessages()" style="width: 100%; background: #6c757d;">Clear</button>
+      <button onclick="clearMessages()" style="width: 100%;">Limpar</button>
 
       <div class="stress-controls">
-        <label>Messages: <input type="number" id="stressCount" value="100" min="1" max="1000"></label>
-        <label>Delay (ms): <input type="number" id="stressDelay" value="10" min="0" max="1000"></label>
+        <label>Contagem (msgs)
+          <input type="number" id="stressCount" value="100" min="1" max="100000">
+        </label>
+        <label>Delay entre msgs (ms)
+          <input type="number" id="stressDelay" value="10" min="0" max="1000">
+        </label>
+        <label>RPS (req/s)
+          <input type="number" id="stressRps" value="0" min="0" max="100000">
+        </label>
+        <label>Duração (s)
+          <input type="number" id="stressDuration" value="0" min="0" max="3600">
+        </label>
+        <label>Payload (bytes)
+          <input type="number" id="stressPayload" value="20" min="0" max="200000">
+        </label>
+        <label>Timeout (ms)
+          <input type="number" id="stressTimeout" value="5000" min="1" max="60000">
+        </label>
       </div>
 
-      <button id="stressBtn" onclick="runStressTest()" style="width: 100%; margin-top: 10px; background: #28a745;">
-        Run Stress Test
-      </button>
+      <div class="input-group" style="margin-top: 10px;">
+        <button id="stressBtn" class="success" onclick="runStressTest()" style="width: 100%;">Iniciar Stress Test</button>
+      </div>
     </div>
 
     <div class="panel">
-      <h2>Messages</h2>
+      <h2>Mensagens</h2>
       <div id="messages"></div>
     </div>
   </div>
@@ -229,140 +98,218 @@
 
 <script>
   let stompClient = null;
-  let messageCount = 0;
-  let responseTimes = [];
-  let messageTimestamps = [];
-  let sentMessages = new Map();
   let stressTestRunning = false;
+  const inflight = new Map(); // id -> { t0, timeout }
+  const receiveTimes = []; // Date.now() de recebidas
+  const stats = {
+    sent: 0,
+    received: 0,
+    failed: 0,
+    sum: 0,
+    min: Number.POSITIVE_INFINITY,
+    max: 0,
+    latencies: [],
+    maxStore: 50000
+  };
 
   function connect() {
-    const socket = new SockJS('http://localhost:8080/ws');
+    const socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
+    stompClient.debug = null; // silencioso
 
     stompClient.connect({}, function(frame) {
-      console.log('Connected: ' + frame);
       document.getElementById('status').className = 'status connected';
       document.getElementById('status').textContent = 'Connected';
 
       stompClient.subscribe('/topic/users', function(message) {
-        const receivedTime = Date.now();
-        const content = message.body;
+        const body = message.body || '';
+        const { id, text } = extractIdAndText(body);
+        if (id && inflight.has(id)) {
+          const now = performance.now();
+          const { t0, timeout } = inflight.get(id);
+          clearTimeout(timeout);
+          inflight.delete(id);
 
-        const sentTime = sentMessages.get(content);
-        if (sentTime) {
-          const responseTime = receivedTime - sentTime;
-          updateMetrics(responseTime);
-          sentMessages.delete(content);
-          displayMessage(content, responseTime);
+          const latency = now - t0;
+          recordLatency(latency);
+          displayMessage(text, latency);
         } else {
-          displayMessage(content, 0);
+          // Mensagem não correlacionada: apenas exibe sem latência
+          displayMessage(body, null);
         }
       });
     }, function(error) {
-      console.log('Error: ' + error);
       document.getElementById('status').className = 'status disconnected';
       document.getElementById('status').textContent = 'Disconnected';
+      console.error('Erro WebSocket:', error);
     });
   }
 
-  function sendMessage() {
-    const msg = document.getElementById('message').value;
-    if (msg && stompClient) {
-      const timestamp = Date.now();
-      sentMessages.set(msg, timestamp);
-      stompClient.send("/app/sendMessage", {}, msg);
-      document.getElementById('message').value = '';
+  function extractIdAndText(body) {
+    if (body && body.startsWith('id=')) {
+      const idx = body.indexOf('|');
+      if (idx > 3) return { id: body.slice(3, idx), text: body.slice(idx + 1) };
     }
+    return { id: null, text: body };
   }
 
-  function displayMessage(content, responseTime) {
+  function sendWithId(text) {
+    if (!stompClient || !stompClient.connected) return;
+    const id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    const payloadBytes = Number(document.getElementById('stressPayload')?.value || 0);
+    const fillerLen = Math.max(0, payloadBytes - text.length);
+    const filler = fillerLen ? 'x'.repeat(fillerLen) : '';
+    const msg = `id=${id}|${text}${filler}`;
+
+    const timeoutMs = Number(document.getElementById('stressTimeout')?.value || 5000);
+    const t0 = performance.now();
+    const timeout = setTimeout(() => {
+      if (inflight.has(id)) {
+        inflight.delete(id);
+        stats.failed++;
+        updateUI();
+      }
+    }, timeoutMs);
+
+    inflight.set(id, { t0, timeout });
+    stats.sent++;
+    stompClient.send('/app/sendMessage', {}, msg);
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('message');
+    const text = input.value || 'ping';
+    sendWithId(text);
+    input.value = '';
+  }
+
+  function displayMessage(content, latencyMs) {
     const messagesDiv = document.getElementById('messages');
     const messageElement = document.createElement('div');
     messageElement.className = 'message';
 
     const now = new Date();
     const timeString = now.toLocaleTimeString('pt-BR');
+    const header = latencyMs != null ? `${timeString} - <span class="response-time">${latencyMs.toFixed(2)}ms</span>` : `${timeString}`;
 
     messageElement.innerHTML = `
-            <div class="message-time">${timeString} ${responseTime > 0 ? `- <span class="response-time">${responseTime}ms</span>` : ''}</div>
-            <div>${content}</div>
-        `;
+      <div class="message-time">${header}</div>
+      <div>${content}</div>
+    `;
 
     messagesDiv.insertBefore(messageElement, messagesDiv.firstChild);
   }
 
-  function updateMetrics(responseTime) {
-    messageCount++;
-    responseTimes.push(responseTime);
-    messageTimestamps.push(Date.now());
+  function recordLatency(latency) {
+    stats.received++;
+    stats.sum += latency;
+    stats.min = Math.min(stats.min, latency);
+    stats.max = Math.max(stats.max, latency);
+    if (stats.latencies.length >= stats.maxStore) stats.latencies.shift();
+    stats.latencies.push(latency);
+    receiveTimes.push(Date.now());
+    updateUI(latency);
+  }
 
-    document.getElementById('totalMessages').textContent = messageCount;
+  function percentile(arr, p) {
+    if (!arr.length) return 0;
+    const sorted = [...arr].sort((a,b)=>a-b);
+    const idx = Math.ceil((p/100) * sorted.length) - 1;
+    const pos = Math.max(0, Math.min(sorted.length - 1, idx));
+    return sorted[pos];
+  }
 
-    const avgTime = responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length;
-    document.getElementById('avgTime').textContent = Math.round(avgTime) + 'ms';
+  function updateUI(lastLatency) {
+    const total = stats.received;
+    document.getElementById('totalMessages').textContent = total;
+    document.getElementById('failures').textContent = stats.failed;
+    document.getElementById('lastTime').textContent = lastLatency != null ? lastLatency.toFixed(2) : (total ? '-' : '-');
 
-    document.getElementById('lastTime').textContent = responseTime + 'ms';
+    const avg = total ? (stats.sum / total) : 0;
+    document.getElementById('avgTime').textContent = avg.toFixed(2);
 
-    const oneMinuteAgo = Date.now() - 60000;
-    const recentMessages = messageTimestamps.filter(time => time > oneMinuteAgo);
-    document.getElementById('messagesPerMin').textContent = recentMessages.length;
+    const p95 = percentile(stats.latencies, 95);
+    const p99 = percentile(stats.latencies, 99);
+    document.getElementById('p95').textContent = p95.toFixed(2);
+    document.getElementById('p99').textContent = p99.toFixed(2);
+
+    const now = Date.now();
+    // Throughput 1s
+    const recent1s = receiveTimes.filter(t => now - t <= 1000).length;
+    document.getElementById('messagesPerSec').textContent = recent1s;
+    // Throughput 1min
+    const recent1m = receiveTimes.filter(t => now - t <= 60000).length;
+    document.getElementById('messagesPerMin').textContent = recent1m;
   }
 
   function clearMessages() {
     document.getElementById('messages').innerHTML = '';
-    messageCount = 0;
-    responseTimes = [];
-    messageTimestamps = [];
-    sentMessages.clear();
-    document.getElementById('totalMessages').textContent = '0';
-    document.getElementById('avgTime').textContent = '0ms';
-    document.getElementById('lastTime').textContent = '-';
-    document.getElementById('messagesPerMin').textContent = '0';
+    stats.sent = 0; stats.received = 0; stats.failed = 0; stats.sum = 0; stats.min = Number.POSITIVE_INFINITY; stats.max = 0; stats.latencies = [];
+    receiveTimes.length = 0;
+    inflight.clear();
+    updateUI();
   }
 
-  function handleKeyPress(event) {
-    if (event.key === 'Enter') {
-      sendMessage();
-    }
-  }
+  function handleKeyPress(event) { if (event.key === 'Enter') sendMessage(); }
 
   async function runStressTest() {
-    if (stressTestRunning) {
-      alert('Stress test already running');
-      return;
-    }
+    if (stressTestRunning) { stopStressTest(); return; }
+    if (!stompClient || !stompClient.connected) { alert('Não conectado ao WebSocket'); return; }
 
-    if (!stompClient || !stompClient.connected) {
-      alert('Not connected to WebSocket');
-      return;
-    }
-
-    const count = parseInt(document.getElementById('stressCount').value);
-    const delay = parseInt(document.getElementById('stressDelay').value);
-
-    stressTestRunning = true;
     const btn = document.getElementById('stressBtn');
-    btn.disabled = true;
-    btn.textContent = 'Running...';
+    stressTestRunning = true;
+    btn.disabled = false; // permite parar
+    btn.textContent = 'Parar Stress Test';
 
-    console.log(`Starting stress test: ${count} messages with ${delay}ms delay`);
+    const rps = parseInt(document.getElementById('stressRps').value || '0', 10);
+    const duration = parseInt(document.getElementById('stressDuration').value || '0', 10);
+    const count = parseInt(document.getElementById('stressCount').value || '0', 10);
+    const delay = parseInt(document.getElementById('stressDelay').value || '0', 10);
 
-    for (let i = 0; i < count; i++) {
-      const msg = `Stress test message ${i + 1}`;
-      const timestamp = Date.now();
+    if (rps > 0 && duration > 0) {
+      runRpsMode(rps, duration);
+    } else if (count > 0) {
+      await runCountDelayMode(count, Math.max(0, delay));
+      stressTestRunning = false;
+      btn.textContent = 'Iniciar Stress Test';
+    } else {
+      alert('Defina RPS e Duração, ou Contagem (msgs).');
+      stressTestRunning = false;
+      btn.textContent = 'Iniciar Stress Test';
+    }
+  }
 
-      sentMessages.set(msg, timestamp);
-      stompClient.send("/app/sendMessage", {}, msg);
+  function stopStressTest() {
+    stressTestRunning = false;
+    document.getElementById('stressBtn').textContent = 'Iniciar Stress Test';
+  }
 
-      if (delay > 0 && i < count - 1) {
-        await new Promise(resolve => setTimeout(resolve, delay));
+  function runRpsMode(rps, durationSeconds) {
+    let tick = 0;
+    const interval = setInterval(() => {
+      if (!stressTestRunning || ++tick > durationSeconds) {
+        clearInterval(interval);
+        stopStressTest();
+        return;
+      }
+      const toSend = rps;
+      if (toSend <= 0) return;
+      for (let j = 0; j < toSend; j++) {
+        const delayWithinSecond = Math.floor((j / toSend) * 1000);
+        setTimeout(() => {
+          if (stressTestRunning) sendWithId(`stress-${tick}-${j}`);
+        }, delayWithinSecond);
+      }
+    }, 1000);
+  }
+
+  async function runCountDelayMode(totalMsgs, delayMs) {
+    for (let i = 0; i < totalMsgs && stressTestRunning; i++) {
+      sendWithId(`count-${i+1}`);
+      if (delayMs > 0 && i < totalMsgs - 1) {
+        await new Promise(res => setTimeout(res, delayMs));
       }
     }
-
-    stressTestRunning = false;
-    btn.disabled = false;
-    btn.textContent = 'Run Stress Test';
-    console.log('Stress test completed');
   }
 
   connect();

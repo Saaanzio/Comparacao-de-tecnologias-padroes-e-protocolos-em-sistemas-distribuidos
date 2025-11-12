@@ -1,4 +1,3 @@
-
 package com.comparador.ComparadorTI.user.websocket;
 
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +18,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("http://localhost:63342", "http://localhost:8080")
+                .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
 }
